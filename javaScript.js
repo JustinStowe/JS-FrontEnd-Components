@@ -1,21 +1,26 @@
 const HOST = "server.com/";
 
 function populateCategories(category) {
-  api.get(HOST + "categories", { category }, function (categories) {
-    let newCategories = "";
-    for (const category of categories) {
-      const categoryElement = `
+  const activeMenuItemName = activeMenuItem.children[0].innerHTML;
+  api.get(
+    HOST + "categories",
+    { category, menuItem: activeMenuItemName },
+    function (categories) {
+      let newCategories = "";
+      for (const category of categories) {
+        const categoryElement = `
         <li class="menu__sub__categories__item">
           <a href="#" class="menu__sub__categories__item__link">${category}</a>
         </li>
       `;
-      newCategories += categoryElement;
+        newCategories += categoryElement;
+      }
+      const categoriesElement = document.getElementsByClassName(
+        `menu__sub__categories__items--${category}`
+      )[0];
+      categoriesElement.innerHTML = newCategories;
     }
-    const categoriesElement = document.getElementsByClassName(
-      `menu__sub__categories__items--${category}`
-    )[0];
-    categoriesElement.innerHTML = newCategories;
-  });
+  );
 }
 
 function showSubmenu() {
@@ -31,13 +36,13 @@ function hideSubmenu() {
   submenu.style.display = "none";
 }
 
-let active = null;
+let activeMenuItem = null;
 
 function onMenuItemMouseEnter(item) {
-  if (active) {
-    active.classList.remove("menu__main__item--active");
+  if (activeMenuItem) {
+    activeMenuItem.classList.remove("menu__main__item--active");
   }
-  active = item;
+  activeMenuItem = item;
   item.classList.add("menu__main__item--active");
   showSubmenu();
 }
@@ -54,9 +59,21 @@ menu.onmouseleave = hideSubmenu;
 
 function getCategories(data) {
   if (data.category == "top") {
+    if (data.menuItem == "Motors") {
+      return ["Car", "Motorcycle", "Plane", "Trucks", "Wheels"];
+    }
+    if (data.menuItem == "Fashion") {
+      return ["Women's tops", "Men's tops", "Jeans", "Hats"];
+    }
     return ["Server apple", "Server banana", "Server pear", "Server orange"];
   }
   if (data.category == "additional") {
+    if (data.menuItem == "Motors") {
+      return ["Tires", "Windshields", "Ski racks", "Doors", "Windows"];
+    }
+    if (data.menuItem == "Fashion") {
+      return ["On sale", "Red stuff", "Gucci", "New Arrivals"];
+    }
     return ["Server square", "Server circle", "Server oval", "Server diamond"];
   }
   return [];
@@ -78,3 +95,10 @@ function getFunction(url, data, callback) {
 const api = {
   get: getFunction,
 };
+
+function deactivateMenuItem() {
+  activeMenuItem.classList.remove("menu__main__item--active");
+}
+
+const submenu = document.getElementsByClassName("menu__sub")[0];
+submenu.onmouseleave = deactivateMenuItem;
