@@ -1,28 +1,15 @@
-const HOST = "server.com/";
-
-document.onclick = function () {
-  api.get(HOST, {}, displayText);
-};
-
-function displayText(response) {
-  document.body.innerHTML += response;
+function menuItemEnter() {
+  const submenu = document.getElementsByClassName("menu__sub")[0];
+  submenu.style.display = "block";
 }
 
-// Server
-
-const endpoints = {
-  "/": {
-    get: "hello world",
-  },
-};
-
-function getFunction(url, data, callback) {
-  const domain = url.substring(0, url.indexOf("/"));
-  const endpoint = url.substring(url.indexOf("/"), url.length);
-
-  callback(endpoints[endpoint]["get"]);
+function menuItemLeave() {
+  const submenu = document.getElementsByClassName("menu__sub")[0];
+  submenu.style.display = "none";
 }
 
-const api = {
-  get: getFunction,
-};
+const menuItems = document.getElementsByClassName("menu__main__item");
+for (const menuItem of menuItems) {
+  menuItem.onmouseenter = menuItemEnter;
+  menuItem.onmouseleave = menuItemLeave;
+}
