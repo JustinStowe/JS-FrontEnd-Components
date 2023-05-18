@@ -1,15 +1,41 @@
+:root {
+  --dark-grey: #333333;
+  --light-grey: #555;
+}
+
+* {
+  font-family: Roboto;
+  box-sizing: border-box;
+}
+
+body {
+  background: blue;
+}
+
 .menu {
+  margin: 0 auto;
+  width: 60rem;
   background: #f7f6f5;
   border-top: 1px solid #cfcfcf;
 }
 
-.menu__item {
+.menu__main__item {
   display: inline-block;
   padding: 0.5rem 2rem;
   border-bottom: 1px solid #cfcfcf;
 }
 
-.menu__item:hover {
+.menu__main__item:first-child:hover {
+  border-left: none;
+  margin-left: 0;
+}
+
+.menu__main__item:last-child:hover {
+  border-right: none;
+  margin-right: 0;
+}
+
+.menu__main__item:hover {
   background: white;
   border-bottom: none;
   border-right: 1px solid #cfcfcf;
@@ -17,21 +43,67 @@
   margin: 0 -1px;
 }
 
-.menu__item--current .menu__item__link {
-  color: #333333;
+.menu__main__item--current .menu__main__item__link {
+  color: var(--dark-grey);
   border-bottom: 2px solid #333;
   padding-bottom: 0.3rem;
 }
 
-.menu__item__link {
+.menu__main__item__link {
   text-decoration: none;
-  color: #555;
+  color: var(--light-grey);
   font-family: Roboto;
   font-size: 0.9rem;
   font-weight: 800;
 }
 
-.menu__item__link:hover {
+.menu__main__item__link:hover {
   text-decoration: underline;
   color: #1c60bb;
+}
+
+.menu__sub {
+  height: 18rem;
+  background: white;
+}
+
+.menu__sub__categories {
+  vertical-align: top;
+  display: inline-block;
+  width: calc(40% - 2px);
+  padding: 0.5rem;
+  background: purple;
+}
+
+.menu__sub__visual {
+  background: green;
+  display: inline-block;
+  width: calc(60% - 2px);
+  padding: 0.5rem;
+}
+
+.menu__sub__visual__img {
+  width: 100%;
+}
+
+.menu__sub__categories__category {
+  display: inline-block;
+  width: calc(50% - 2px);
+  background: red;
+  vertical-align: top;
+}
+
+.menu__sub__categories__header {
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--light-grey);
+  margin-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+.menu__sub__categories__items {
+  list-style: none;
+  padding: 0;
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+  color: var(--light-grey);
 }
